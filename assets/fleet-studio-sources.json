@@ -1,0 +1,128 @@
+{
+  "created": "2026-10-13",
+  "source": "OpenAI image generation for this project",
+  "purpose": "Illustrative model catalogue images, not actual rental stock",
+  "style": "Black cars, white seamless studio, soft ground shadow",
+  "cars": [
+    {
+      "id": 1,
+      "model": "Suzuki Alto",
+      "image": "/assets/cars-studio/1.png"
+    },
+    {
+      "id": 2,
+      "model": "Suzuki Cultus",
+      "image": "/assets/cars-studio/2.png"
+    },
+    {
+      "id": 3,
+      "model": "Suzuki Wagon R",
+      "image": "/assets/cars-studio/3.png"
+    },
+    {
+      "id": 4,
+      "model": "Suzuki Swift",
+      "image": "/assets/cars-studio/4.png"
+    },
+    {
+      "id": 5,
+      "model": "Toyota Vitz",
+      "image": "/assets/cars-studio/5.png"
+    },
+    {
+      "id": 6,
+      "model": "Daihatsu Mira",
+      "image": "/assets/cars-studio/6.png"
+    },
+    {
+      "id": 7,
+      "model": "Toyota Passo",
+      "image": "/assets/cars-studio/7.png"
+    },
+    {
+      "id": 8,
+      "model": "Toyota Yaris",
+      "image": "/assets/cars-studio/8.png"
+    },
+    {
+      "id": 9,
+      "model": "Toyota Corolla",
+      "image": "/assets/cars-studio/9.png"
+    },
+    {
+      "id": 10,
+      "model": "Honda City",
+      "image": "/assets/cars-studio/10.png"
+    },
+    {
+      "id": 11,
+      "model": "Honda Civic",
+      "image": "/assets/cars-studio/11.png"
+    },
+    {
+      "id": 12,
+      "model": "Toyota Prius",
+      "image": "/assets/cars-studio/12.png"
+    },
+    {
+      "id": 13,
+      "model": "Hyundai Elantra",
+      "image": "/assets/cars-studio/13.png"
+    },
+    {
+      "id": 14,
+      "model": "Toyota Camry",
+      "image": "/assets/cars-studio/14.png"
+    },
+    {
+      "id": 15,
+      "model": "Kia Sportage",
+      "image": "/assets/cars-studio/15.png"
+    },
+    {
+      "id": 16,
+      "model": "Hyundai Tucson",
+      "image": "/assets/cars-studio/16.png"
+    },
+    {
+      "id": 17,
+      "model": "MG HS",
+      "image": "/assets/cars-studio/17.png"
+    },
+    {
+      "id": 18,
+      "model": "Haval H6",
+      "image": "/assets/cars-studio/18.png"
+    },
+    {
+      "id": 19,
+      "model": "Changan Oshan X7",
+      "image": "/assets/cars-studio/19.png"
+    },
+    {
+      "id": 20,
+      "model": "Toyota Fortuner",
+      "image": "/assets/cars-studio/20.png"
+    },
+    {
+      "id": 21,
+      "model": "Toyota Prado",
+      "image": "/assets/cars-studio/21.png"
+    },
+    {
+      "id": 22,
+      "model": "Toyota Land Cruiser",
+      "image": "/assets/cars-studio/22.png"
+    },
+    {
+      "id": 23,
+      "model": "Honda BR-V",
+      "image": "/assets/cars-studio/23.png"
+    },
+    {
+      "id": 24,
+      "model": "Kia Carnival",
+      "image": "/assets/cars-studio/24.png"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+.private/
+.npm-cache/
+.env
+.env.*
+!.env.example
+node_modules/
+.auth-test-*/
+.vercel/
+dist/
+release/
+*.rar
+*.zip
+*-preview.png
+browser-qa.cjs
