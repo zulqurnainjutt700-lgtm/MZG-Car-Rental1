@@ -1,5 +1,10 @@
 # MZG Car Rental: GitHub and Vercel deployment
 
+## Current production: Vercel + Supabase
+
+Production routes now use `api/backend.js` and private Supabase PostgreSQL storage. See [SUPABASE_DEPLOYMENT.md](SUPABASE_DEPLOYMENT.md) for current configuration, migration and backup instructions. SQLite is retained for local/offline usage. The persistent-server/proxy instructions below describe the alternative architecture and are not required for the current direct serverless deployment.
+
+
 ## What deploys
 
 The existing design, images and public pages deploy on Vercel. `npm run build` copies only public site files into `dist`; secrets, databases, source code and account HTML are excluded. Vercel routes API, admin, private account, CMS/public-page, media and sitemap requests through `api/gateway.js` to the existing persistent Node backend. This keeps the current authentication system and its SQLite database intact.

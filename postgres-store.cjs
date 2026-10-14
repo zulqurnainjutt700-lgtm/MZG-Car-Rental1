@@ -7,7 +7,8 @@ const tables=['users','sessions','tokens','bookings','booking_events','limits','
 function translate(sql){
  let n=0;
  sql=sql.replace(/date\(created_at,'\+5 hours'\)/g,"to_char((created_at::timestamptz AT TIME ZONE 'Asia/Karachi'),'YYYY-MM-DD')");
- sql=sql.replace(/'([^']|'')*'|\?|\b[A-Za-z_][A-Za-z_0-9]*\b/g,token=>token==='?'?'$'+(++n):tables.includes(token.toLowerCase())?'mzg_private.'+token:token);
+ sql=sql.replace(/sum\((status='[^']+')\)/gi,'sum(($1)::int)');
+ sql=sql.replace(/'([^']|'')*'|\?|\b[A-Za-z_][A-Za-z_0-9]*\b/g,token=>token==='?'?'$'+(++n):token==='day'?'"day"':tables.includes(token.toLowerCase())?'mzg_private.'+token:token);
  if(/^INSERT OR IGNORE/i.test(sql)){sql=sql.replace(/^INSERT OR IGNORE/i,'INSERT');sql+=' ON CONFLICT DO NOTHING';}
  return sql.replace(/\bLIKE\b/g,'ILIKE');
 }

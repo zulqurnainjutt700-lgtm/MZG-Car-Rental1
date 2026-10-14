@@ -23,7 +23,7 @@ Set Production variables in Vercel:
 - `BACKUP_INTERVAL_HOURS=0`: serverless processes cannot schedule disk backups.
 
 Do not set `BACKEND_ORIGIN` for the direct Vercel backend deployment.
-The routing switch must be deployed after connection/migration tests pass.
+Production routing uses api/backend.js after verified database migration. The legacy api/gateway.js remains available only for the alternative persistent-server deployment.
 
 ## Existing data
 
