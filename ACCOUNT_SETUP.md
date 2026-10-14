@@ -31,13 +31,13 @@ Verification links expire after 24 hours, reset links after 30 minutes. New link
 ## Owner / administrator
 
 1. Create your own account through Sign Up.
-2. In the trusted project terminal, run `node manage-admin.cjs promote YOUR-ACCOUNT-EMAIL`.
-3. Sign in again. Use Owner Review in your account menu or `/admin.html`.
-4. To remove access: `node manage-admin.cjs demote YOUR-ACCOUNT-EMAIL`.
+2. In the trusted project terminal, run `node admin-owner.cjs setup YOUR-ACCOUNT-EMAIL --confirm-owner-operation`.
+3. Sign in at `/admin` and enroll authenticator MFA. Use the dedicated business workspace.
+4. Assign/revoke operational administrator or staff permissions through the Owner Security & access screen. The owner is protected from demotion. See `ADMIN_SETUP.md`.
 
-There are no default admin credentials and no public role-assignment API. Registering an account never grants administrator access. The role command revokes that account's existing sessions.
+There are no default admin credentials; role-assignment APIs require MFA-verified owner access. Registering an account never grants administrator access. The role command revokes that account's existing sessions.
 
-Owner Review supports a customer-visible quotation, recorded prepaid amount, rental terms and state transitions: Pending → Confirmed/Cancelled, Confirmed → Active/Cancelled, Active → Completed. Confirmation requires a final quotation and notes explaining availability, deposit, insurance/excess and terms. Overlapping confirmed/active rentals of the same car entry are blocked. Multiple physical vehicles of one model would require separate inventory entries in a future inventory expansion. Past/terminal states cannot be arbitrarily reopened.
+Owner Review supports a customer-visible quotation, recorded prepaid amount, rental terms and state transitions: Pending → Confirmed/Rejected/Cancelled, Confirmed → Active/Cancelled, Active → Completed. Confirmation requires a final quotation and notes explaining availability, deposit, insurance/excess and terms. Overlapping confirmed/active rentals of the same car entry are blocked. Multiple physical vehicles of one model use separate database fleet entries with unique internal references. Past/terminal states cannot be arbitrarily reopened.
 
 Payments are not collected online. Prepaid amounts are owner-entered records of rental money already received. MZG must process payments/refunds directly. Pending requests can be cancelled free; Confirmed requests can be cancelled online before pickup, with the configured 24-hour rule and fee capped at recorded prepaid rent. Active/Completed rentals require contacting MZG. Every cancellation and owner change has an event history. Customer IDs and quotes/statuses cannot be changed through customer APIs.
 

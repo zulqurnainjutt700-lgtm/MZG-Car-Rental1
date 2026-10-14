@@ -19,6 +19,7 @@ function openStore(directory=path.join(__dirname,'.private')){
   const users=JSON.parse(fs.readFileSync(legacy,'utf8'));if(!Array.isArray(users))throw new Error('Invalid legacy user file');
   transaction(()=>{const insert=db.prepare('INSERT OR IGNORE INTO users(id,name,email,salt,password_hash,hash_n,hash_p,verified_at,created_at,terms_at) VALUES(?,?,?,?,?,?,?,?,?,?)');for(const u of users){if(!u.id||!u.email||!u.salt||!u.hash)throw new Error('Incomplete legacy account');insert.run(u.id,u.name,u.email.toLowerCase(),u.salt,u.hash,16384,1,u.emailVerified?u.createdAt:null,u.createdAt,u.termsAcceptedAt||u.createdAt);}db.prepare("INSERT INTO metadata VALUES('json_migrated',?)").run(new Date().toISOString());});
  }
+ require('./admin-schema.cjs').migrate(db,transaction,directory);
  return {db,transaction,directory};
 }
 module.exports={openStore};

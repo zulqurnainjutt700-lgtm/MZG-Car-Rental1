@@ -3,7 +3,7 @@ const root=__dirname,out=path.join(root,'dist');
 if(path.resolve(out)!==path.join(root,'dist'))throw new Error('Invalid output directory');
 fs.rmSync(out,{recursive:true,force:true});fs.mkdirSync(out);
 const pages=['index','about','contact','privacy-policy','terms-and-conditions','rental-plans','image-credits','fleet','rental-policy','signup','login','forgot-password','reset-password','verify-email'];
-const files=[...pages.map(p=>p+'.html'),'style.css','pages.css','app.js','shared.js','home.js','fleet.json','rental-policy.json'];
+const files=[...pages.map(p=>p+'.html'),'admin-invitation.html','style.css','pages.css','app.js','shared.js','home.js','fleet.json','rental-policy.json'];
 for(const file of files)fs.copyFileSync(path.join(root,file),path.join(out,file));
 fs.cpSync(path.join(root,'assets'),path.join(out,'assets'),{recursive:true});
 // Private account HTML is served by the protected backend, never by the CDN.

@@ -1,0 +1,7 @@
+# Existing project audit and implementation plan
+
+The working tree was clean before this enhancement. The site uses static HTML/CSS/browser JavaScript and a persistent custom Node 24 HTTP backend (`server.cjs`). There is no Firebase, Supabase or framework router. Existing customer authentication uses scrypt password hashes, hashed persistent sessions, HttpOnly cookies, exact-origin/CSRF checks, private SQLite storage and SMTP integration. Existing bookings are Pending requests with customer ownership, cancellation rules and basic owner review. Those mechanisms are reused.
+
+Missing at audit: dedicated administrator sign-in, MFA, granular permissions, CMS drafts/revisions, database fleet management, image library, global settings, maintenance enforcement, revenue ledger, audit history and backups. The existing `admin.html` provided only basic booking review. Vercel currently hosts public files and proxies private routes to a separately hosted persistent backend; static hosting cannot execute this backend or persist SQLite.
+
+Implementation phases: schema migrations and MFA/owner setup; shared-session administrator authorization; dashboard/bookings/customers; database fleet and sanitized media; existing-page section editor and approved block templates; SEO/settings/maintenance; audit logs/backups; automated integration, regression, responsive and build verification. Cheerio is added solely to safely parse the existing HTML for the CMS. No frontend framework replacement or parallel authentication provider is introduced.

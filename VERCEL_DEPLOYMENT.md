@@ -2,9 +2,9 @@
 
 ## What deploys
 
-The existing design, images and public pages deploy on Vercel. `npm run build` copies only public site files into `dist`; secrets, databases, source code and account HTML are excluded. Vercel routes `/api/*` and private account pages through `api/gateway.js` to the existing persistent Node backend. This keeps the current authentication system and its SQLite database intact.
+The existing design, images and public pages deploy on Vercel. `npm run build` copies only public site files into `dist`; secrets, databases, source code and account HTML are excluded. Vercel routes API, admin, private account, CMS/public-page, media and sitemap requests through `api/gateway.js` to the existing persistent Node backend. This keeps the current authentication system and its SQLite database intact.
 
-**Vercel alone does not provide this application's persistent SQLite storage.** Do not move the database into `/tmp`: accounts and bookings would be lost across instances/redeployments. Until the backend is configured, public pages are usable but accounts/bookings explicitly return a 503 setup message. No requests are silently saved or falsely confirmed. WhatsApp rental enquiries remain available.
+**Vercel alone does not provide this application's persistent SQLite storage.** Do not move the database into `/tmp`: accounts and bookings would be lost across instances/redeployments. Until the backend is configured, the original public snapshot is usable but accounts/bookings explicitly return a 503 setup message. No requests are silently saved or falsely confirmed. WhatsApp rental enquiries remain available.
 
 ## 1. Import the GitHub repository into Vercel
 
@@ -47,13 +47,13 @@ Set these environment variables in Vercel's **Production** environment and redep
 | `BACKEND_ORIGIN` | The backend's HTTPS origin, without a path |
 | `BACKEND_PROXY_SECRET` | The same secret configured on the backend |
 
-Do not set SQLite credentials/directories on Vercel. Host-only session cookies are forwarded to the browser on the Vercel domain; the backend requires Secure, HttpOnly, SameSite=Strict cookies.
+Do not set SQLite credentials/directories on Vercel. Configure `ADMIN_ENCRYPTION_KEY` on the backend, as described in `ADMIN_SETUP.md`. Connected public pages are rendered from the published database CMS; the unconnected fallback does not reflect CMS edits. Host-only session cookies are forwarded to the browser on the Vercel domain; the backend requires Secure, HttpOnly, SameSite=Strict cookies.
 
 ## 4. Email and owner access
 
 Configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` and `SMTP_FROM` on the **backend** as described in `ACCOUNT_SETUP.md`. Use a verified sender and working SMTP credentials; email verification/reset cannot work until this is done. `npm run check:smtp` verifies the SMTP connection, not inbox delivery.
 
-Create your owner account through the website, verify its email, then use the trusted backend terminal to promote it with `node manage-admin.cjs promote YOUR_EMAIL`. That CLI uses the same `AUTH_DIRECTORY` environment variable as the server. Never place an owner password in source code. Sign in again after promotion.
+Create your owner account through the website, verify its email, then use the trusted backend terminal to promote it with `node admin-owner.cjs setup YOUR_EMAIL --confirm-owner-operation`. That CLI uses the same `AUTH_DIRECTORY` environment variable as the server. Never place an owner password in source code. Sign in at `/admin`, then enroll authenticator MFA. See `ADMIN_SETUP.md` for encryption-key configuration, permissions and safe recovery.
 
 ## 5. Deployment verification
 

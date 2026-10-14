@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "cheerio": "^1.1.2",
     "nodemailer": "10.1.0",
+    "qrcode": "^1.5.4",
     "sharp": "0.35.5"
   },
   "name": "mzg-car-rental",
@@ -13,7 +15,8 @@
     "start": "node server.cjs",
     "build": "node build-vercel.cjs",
     "test:deployment": "node verify-deployment.cjs",
-    "test": "node verify-site.cjs && node verify-hero.cjs && node verify-auth.cjs",
+    "test:admin": "node verify-admin.cjs",
+    "test": "node verify-site.cjs && node verify-hero.cjs && node verify-auth.cjs && node verify-admin.cjs",
     "check:smtp": "node check-smtp.cjs"
   }
 }

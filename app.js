@@ -70,8 +70,8 @@ grid.addEventListener('click', async event => {
     document.querySelector('#booking-image').alt=car.make+' '+car.name+' model illustration';
     document.querySelector('#booking-error').textContent=valid?'':'Choose a valid pickup date and a return date/time after pickup.';
     document.querySelector('#total').textContent=valid?money(car.rate*duration):'—';
-    const terms=policy.categories[car.category];
-    document.querySelector('#booking-policy').textContent=valid?duration+' rental day(s) · '+money(car.rate)+'/day · '+(duration*policy.includedKmPerDay).toLocaleString()+' km included. Extra mileage: '+money(terms.extraKm)+'/km. Refundable deposit: '+money(terms.deposit)+' (separate from rental). Free cancellation at least 24 hours before pickup; later cancellation/no-show: one daily rental, capped at prepaid rent. Insurance cover and excess must be verified for your selected vehicle before payment.':'';
+    const terms={...policy.categories[car.category],deposit:car.deposit??policy.categories[car.category].deposit};
+    document.querySelector('#booking-policy').textContent=valid?duration+' rental day(s) · '+money(car.rate)+'/day · '+(duration*policy.includedKmPerDay).toLocaleString()+' km included. Extra mileage: '+money(terms.extraKm)+'/km. Refundable deposit: '+money(terms.deposit)+' (separate from rental). Free cancellation at least '+policy.cancellationNoticeHours+' hours before pickup; later cancellation/no-show: one daily rental, capped at prepaid rent. Insurance cover and excess must be verified for your selected vehicle before payment.':'';
     quote=valid?{car,duration,terms,total:car.rate*duration}:null;
   };
   document.querySelector('#booking-form').addEventListener('input',event=>{

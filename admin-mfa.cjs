@@ -1,0 +1,10 @@
+const crypto=require('node:crypto'),fs=require('node:fs'),path=require('node:path');
+const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+function base32(bytes){let bits=0,value=0,out='';for(const b of bytes){value=(value<<8)|b;bits+=8;while(bits>=5){out+=alphabet[(value>>>(bits-5))&31];bits-=5;}}if(bits)out+=alphabet[(value<<(5-bits))&31];return out;}
+function decode(value){let bits=0,n=0,out=[];for(const c of value){const a=alphabet.indexOf(c);if(a<0)throw Error('Invalid secret');n=(n<<5)|a;bits+=5;if(bits>=8){out.push((n>>>(bits-8))&255);bits-=8;}}return Buffer.from(out);}
+function totp(secret,step=Math.floor(Date.now()/30000),digits=6){const b=Buffer.alloc(8);b.writeBigUInt64BE(BigInt(step));const h=crypto.createHmac('sha1',decode(secret)).update(b).digest(),offset=h[h.length-1]&15;return String((h.readUInt32BE(offset)&0x7fffffff)%10**digits).padStart(digits,'0');}
+function verify(secret,code,last=-1){if(typeof code==='string')code=code.replace(/\s/g,'');if(typeof code!=='string'||!/^\d{6}$/.test(code))return null;const now=Math.floor(Date.now()/30000);for(const step of [now,now-1,now+1])if(step>last&&crypto.timingSafeEqual(Buffer.from(totp(secret,step)),Buffer.from(code)))return step;return null;}
+function cipher(directory,secure){let key;if(process.env.ADMIN_ENCRYPTION_KEY){key=Buffer.from(process.env.ADMIN_ENCRYPTION_KEY,'base64');if(key.length!==32)throw Error('ADMIN_ENCRYPTION_KEY must encode 32 bytes');}else{if(secure)return null;const filename=path.join(directory,'admin-encryption.key');if(!fs.existsSync(filename))fs.writeFileSync(filename,crypto.randomBytes(32),{mode:0o600,flag:'wx'});key=fs.readFileSync(filename);}
+ return {encrypt(text){const nonce=crypto.randomBytes(12),c=crypto.createCipheriv('aes-256-gcm',key,nonce);return Buffer.concat([nonce,c.update(text),c.final(),c.getAuthTag()]).toString('base64');},decrypt(text){const b=Buffer.from(text,'base64'),c=crypto.createDecipheriv('aes-256-gcm',key,b.subarray(0,12));c.setAuthTag(b.subarray(-16));return Buffer.concat([c.update(b.subarray(12,-16)),c.final()]).toString();}};
+}
+module.exports={base32,totp,verify,cipher};

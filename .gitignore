@@ -12,3 +12,4 @@ release/
 *.zip
 *-preview.png
 browser-qa.cjs
+.admin-qa.cjs

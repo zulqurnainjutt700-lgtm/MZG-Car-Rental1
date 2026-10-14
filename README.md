@@ -42,3 +42,7 @@ The public pages can be hosted statically, but account registration/sign-in requ
 The existing custom Node backend now uses private SQLite storage, with one-time migration of legacy JSON users. Shared authentication powers login, signup, dashboard, profile, bookings, settings and owner review. Sessions survive refresh and server restart. New rental requests are always Pending; quotations and status updates belong to authorised owners. The contact-only enquiry form still prepares a WhatsApp message.
 
 Read [AUTH_AUDIT.md](AUTH_AUDIT.md) for the original-code audit and [ACCOUNT_SETUP.md](ACCOUNT_SETUP.md) for SMTP, admin-role setup, local running instructions, production requirements and tests. Run `npm test`. No default administrator or fabricated email delivery is provided.
+
+## Administrator workspace and CMS
+
+Open `/admin` on the persistent Node server. [ADMIN_SETUP.md](ADMIN_SETUP.md) documents one-time owner provisioning, mandatory authenticator MFA, explicit staff permissions, fleet/customer/booking management, receipt-based metrics, secure media, section editing, drafts/preview/publishing/rollback, SEO/settings/maintenance, invitations, activity logs and verified private backups/offline restore. [ADMIN_AUDIT.md](ADMIN_AUDIT.md) records the initial architecture audit. Existing public HTML/assets remain the design baseline; live published content is rendered from SQLite. Vercel requires the configured persistent backend for live CMS operations.

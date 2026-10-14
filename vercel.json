@@ -4,11 +4,18 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": false,
-  "functions": { "api/gateway.js": { "maxDuration": 60 } },
+  "functions": { "api/gateway.js": { "maxDuration": 60, "includeFiles": "dist/{*.html,*.json,*.xml,*.txt}" } },
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/gateway" },
+    { "source": "/admin/:path*", "destination": "/api/gateway" },
+    { "source": "/cms-preview/:path*", "destination": "/api/gateway" },
+    { "source": "/media/:path*", "destination": "/api/gateway" },
     { "source": "/:page(dashboard|profile|my-bookings|account-settings|admin).html", "destination": "/api/gateway" },
-    { "source": "/:page(dashboard|profile|my-bookings|account-settings|admin)", "destination": "/api/gateway" }
+    { "source": "/:page(dashboard|profile|my-bookings|account-settings|admin)", "destination": "/api/gateway" },
+    { "source": "/", "destination": "/api/gateway" },
+    { "source": "/:page(index|about|contact|fleet|rental-plans|rental-policy|privacy-policy|terms-and-conditions|image-credits|login|signup|forgot-password|reset-password|verify-email|admin-invitation).html", "destination": "/api/gateway" },
+    { "source": "/:file(fleet.json|rental-policy.json|sitemap.xml|robots.txt)", "destination": "/api/gateway" },
+    { "source": "/:slug([a-z0-9-]+)", "destination": "/api/gateway" }
   ],
   "headers": [{ "source": "/(.*)", "headers": [
     { "key": "X-Content-Type-Options", "value": "nosniff" },
