@@ -14,5 +14,7 @@ const crawl=['index','fleet','rental-plans','about','contact','rental-policy','p
 const xmlEscape=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 if(origin){fs.writeFileSync(path.join(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+crawl.map(p=>'<url><loc>'+xmlEscape(origin+(p==='index'?'/':'/'+p+'.html'))+'</loc></url>').join('')+'</urlset>\n');}
 fs.writeFileSync(path.join(out,'robots.txt'),'User-agent: *\nAllow: /\nDisallow: /api/\n'+['dashboard','profile','my-bookings','account-settings','admin','login','signup','reset-password','verify-email','forgot-password'].map(p=>'Disallow: /'+p).join('\n')+'\n'+(origin?'Sitemap: '+origin+'/sitemap.xml\n':''));
-console.log('Vercel public build ready: '+files.length+' files and local assets. Private data and private account pages excluded.');
+// Dynamic content must not exist in the CDN filesystem: it would shadow CMS rewrites.
+for(const name of fs.readdirSync(out))if(/\.(html|json|xml|txt)$/.test(name))fs.unlinkSync(path.join(out,name));
+console.log('Vercel static assets ready. HTML, fleet, policies and SEO are served by the protected backend renderer.');
 console.log('Vercel backend requires private DATABASE_URL, ADMIN_ENCRYPTION_KEY and PUBLIC_ORIGIN environment settings.');
