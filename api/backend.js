@@ -1,4 +1,4 @@
-const {Readable}=require('node:stream');
+const {normalizeRequest}=require('../vercel-request.cjs');
 let server;
 module.exports=async function backend(req,res){
  try{
@@ -6,8 +6,7 @@ module.exports=async function backend(req,res){
   const origin=process.env.PUBLIC_ORIGIN;
   if(!origin||!origin.startsWith('https://'))throw Error('configuration');
   if(!server)server=require('../server.cjs').createServer({authDirectory:'/tmp/mzg-runtime',origin,secureCookies:true});
-  let incoming=req;
-  if(req.body!==undefined){const body=Buffer.isBuffer(req.body)||typeof req.body==='string'?req.body:JSON.stringify(req.body);incoming=Readable.from([body]);incoming.method=req.method;incoming.url=req.url;incoming.headers=req.headers;incoming.socket=req.socket;}
+  const incoming=normalizeRequest(req);
   // Vercel supplies this trusted client IP header; ordinary forwarded headers are ignored.
   const ip=String(req.headers['x-vercel-forwarded-for']||'').split(',')[0].trim();
   if(require('node:net').isIP(ip))incoming.mzgClientIp=ip;

@@ -18,6 +18,7 @@
     "test:deployment": "node verify-deployment.cjs",
     "test:admin": "node verify-admin.cjs",
     "test": "node verify-site.cjs && node verify-hero.cjs && node verify-auth.cjs && node verify-admin.cjs",
-    "check:smtp": "node check-smtp.cjs"
+    "check:smtp": "node check-smtp.cjs",
+    "test:vercel-body": "node verify-vercel-body.cjs"
   }
 }
