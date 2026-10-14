@@ -1,6 +1,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const {DatabaseSync}=require('node:sqlite');
 function openStore(directory=path.join(__dirname,'.private')){
+ if(process.env.DATABASE_URL)return require('./postgres-store.cjs').openPostgresStore(process.env.DATABASE_URL,directory);
  fs.mkdirSync(directory,{recursive:true,mode:0o700});const db=new DatabaseSync(path.join(directory,'mzg.sqlite'));
  db.exec(`PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;
  CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,name TEXT NOT NULL,email TEXT NOT NULL UNIQUE COLLATE NOCASE,phone TEXT NOT NULL DEFAULT '',city TEXT NOT NULL DEFAULT 'Lahore',country TEXT NOT NULL DEFAULT 'Pakistan',salt TEXT NOT NULL,password_hash TEXT NOT NULL,hash_n INTEGER NOT NULL DEFAULT 32768,hash_p INTEGER NOT NULL DEFAULT 3,verified_at TEXT,created_at TEXT NOT NULL,terms_at TEXT NOT NULL,role TEXT NOT NULL DEFAULT 'customer' CHECK(role IN ('customer','admin')),avatar BLOB,updated_at TEXT);

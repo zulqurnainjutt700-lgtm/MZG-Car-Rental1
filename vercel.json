@@ -4,24 +4,83 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": false,
-  "functions": { "api/gateway.js": { "maxDuration": 60, "includeFiles": "dist/{*.html,*.json,*.xml,*.txt}" } },
+  "functions": {
+    "api/gateway.js": {
+      "maxDuration": 60,
+      "includeFiles": "dist/{*.html,*.json,*.xml,*.txt}"
+    },
+    "api/backend.js": {
+      "maxDuration": 60,
+      "includeFiles": "{*.html,*.json,postgres-schema.sql,postgres-worker.cjs,supabase-ca.crt,assets/admin*.js,assets/admin.css,assets/account*.js}"
+    }
+  },
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/gateway" },
-    { "source": "/admin/:path*", "destination": "/api/gateway" },
-    { "source": "/cms-preview/:path*", "destination": "/api/gateway" },
-    { "source": "/media/:path*", "destination": "/api/gateway" },
-    { "source": "/:page(dashboard|profile|my-bookings|account-settings|admin).html", "destination": "/api/gateway" },
-    { "source": "/:page(dashboard|profile|my-bookings|account-settings|admin)", "destination": "/api/gateway" },
-    { "source": "/", "destination": "/api/gateway" },
-    { "source": "/:page(index|about|contact|fleet|rental-plans|rental-policy|privacy-policy|terms-and-conditions|image-credits|login|signup|forgot-password|reset-password|verify-email|admin-invitation).html", "destination": "/api/gateway" },
-    { "source": "/:file(fleet.json|rental-policy.json|sitemap.xml|robots.txt)", "destination": "/api/gateway" },
-    { "source": "/:slug([a-z0-9-]+)", "destination": "/api/gateway" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/cms-preview/:path*",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/media/:path*",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/:page(dashboard|profile|my-bookings|account-settings|admin).html",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/:page(dashboard|profile|my-bookings|account-settings|admin)",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/:page(index|about|contact|fleet|rental-plans|rental-policy|privacy-policy|terms-and-conditions|image-credits|login|signup|forgot-password|reset-password|verify-email|admin-invitation).html",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/:file(fleet.json|rental-policy.json|sitemap.xml|robots.txt)",
+      "destination": "/api/backend"
+    },
+    {
+      "source": "/:slug([a-z0-9-]+)",
+      "destination": "/api/backend"
+    }
   ],
-  "headers": [{ "source": "/(.*)", "headers": [
-    { "key": "X-Content-Type-Options", "value": "nosniff" },
-    { "key": "X-Frame-Options", "value": "DENY" },
-    { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-    { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-    { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'" }
-  ]}]
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'"
+        }
+      ]
+    }
+  ]
 }

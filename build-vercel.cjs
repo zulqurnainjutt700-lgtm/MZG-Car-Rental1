@@ -15,4 +15,4 @@ const xmlEscape=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&q
 if(origin){fs.writeFileSync(path.join(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+crawl.map(p=>'<url><loc>'+xmlEscape(origin+(p==='index'?'/':'/'+p+'.html'))+'</loc></url>').join('')+'</urlset>\n');}
 fs.writeFileSync(path.join(out,'robots.txt'),'User-agent: *\nAllow: /\nDisallow: /api/\n'+['dashboard','profile','my-bookings','account-settings','admin','login','signup','reset-password','verify-email','forgot-password'].map(p=>'Disallow: /'+p).join('\n')+'\n'+(origin?'Sitemap: '+origin+'/sitemap.xml\n':''));
 console.log('Vercel public build ready: '+files.length+' files and local assets. Private data and private account pages excluded.');
-if(!process.env.BACKEND_ORIGIN)console.log('BACKEND_ORIGIN is not configured: public pages work; account/booking requests will return a clear setup message.');
+console.log('Vercel backend requires private DATABASE_URL, ADMIN_ENCRYPTION_KEY and PUBLIC_ORIGIN environment settings.');
