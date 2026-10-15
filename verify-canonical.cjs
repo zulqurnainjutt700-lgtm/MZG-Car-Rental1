@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const {canonicalPageLocation}=require('./canonical-request.cjs');
+const origin='https://mzg-car-rental2.vercel.app';
+const req=(url,host='deployment-example.vercel.app',method='GET')=>({url,method,headers:{host}});
+assert.equal(canonicalPageLocation(req('/admin'),origin),origin+'/admin');
+assert.equal(canonicalPageLocation(req('/fleet.html?category=SUV'),origin),origin+'/fleet.html?category=SUV');
+assert.equal(canonicalPageLocation(req('/admin',new URL(origin).host),origin),null);
+assert.equal(canonicalPageLocation(req('/api/admin/signin',undefined,'POST'),origin),null);
+assert.equal(canonicalPageLocation(req('/api/jobs/email'),origin),null);
+assert.equal(canonicalPageLocation(req('/media/file.webp'),origin),null);
+assert.equal(canonicalPageLocation(req('/assets/admin.js'),origin),null);
+assert.equal(new URL(canonicalPageLocation(req('//attacker.example/path'),origin)).origin,origin);
+assert.throws(()=>canonicalPageLocation(req('/admin'),'https://attacker.example@main.example/'));
+assert.throws(()=>canonicalPageLocation(req('/admin'),'https://main.example/subpath'));
+console.log('PASS canonical page redirects, query preservation, fixed target origin and unchanged protected POST/API routes.');

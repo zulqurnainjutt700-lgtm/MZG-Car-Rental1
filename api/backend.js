@@ -5,6 +5,8 @@ module.exports=async function backend(req,res){
   if(!process.env.DATABASE_URL||!process.env.ADMIN_ENCRYPTION_KEY)throw Error('configuration');
   const origin=process.env.PUBLIC_ORIGIN;
   if(!origin||!origin.startsWith('https://'))throw Error('configuration');
+  const canonicalLocation=require('../canonical-request.cjs').canonicalPageLocation(req,origin);
+  if(canonicalLocation){res.writeHead(307,{'Location':canonicalLocation,'Cache-Control':'no-store'});res.end();return;}
   if(!server)server=require('../server.cjs').createServer({authDirectory:'/tmp/mzg-runtime',origin,secureCookies:true});
   const incoming=normalizeRequest(req);
   // Vercel supplies this trusted client IP header; ordinary forwarded headers are ignored.
