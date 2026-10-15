@@ -53,7 +53,7 @@ function createAuth(options={}){
    if(method==='POST'&&['/api/signup','/api/signin','/api/forgot-password'].includes(route)){
     limit('auth:'+ip,20,900000);const data=await readBody(req),address=email(data.email);if(!address)fail(400,'Please correct the highlighted fields.',{email:'Enter a valid email address.'});limit('auth-email:'+digest(address),15,3600000);
     if(route==='/api/forgot-password'){
-     if(!mailer.configured)fail(503,'Password-reset email is not configured. Please contact MZG support.');limit('reset:'+digest(address),3,3600000);const user=get('SELECT * FROM users WHERE email=?',address);if(user){void sendToken(user,'reset').catch(()=>{console.warn('A password-reset delivery attempt failed. Check SMTP configuration.');});}
+     if(!mailer.configured)fail(503,'Password-reset email is not configured. Please contact MZG support.');limit('reset:'+digest(address),3,3600000);const user=get('SELECT * FROM users WHERE email=?',address);if(user){await sendToken(user,'reset').catch(()=>{console.warn('A password-reset delivery attempt failed. Check SMTP configuration.');});}
      reply(res,202,{message:'If that address has an account, a reset request has been accepted. Check your inbox and contact MZG if no email arrives.'});return true;
     }
     if(!passwordValid(data.password))fail(400,'Please correct the highlighted fields.',{password:'Use a password of 12–128 characters.'});
