@@ -17,10 +17,11 @@
     "build": "node build-vercel.cjs",
     "test:deployment": "node verify-deployment.cjs",
     "test:admin": "node verify-admin.cjs",
-    "test": "node verify-site.cjs && node verify-hero.cjs && node verify-auth.cjs && node verify-admin.cjs && node verify-inventory.cjs && node verify-notifications.cjs && node verify-vercel-body.cjs && node verify-canonical.cjs && node verify-customer-notices.cjs",
+    "test": "node verify-site.cjs && node verify-hero.cjs && node verify-auth.cjs && node verify-admin.cjs && node verify-inventory.cjs && node verify-notifications.cjs && node verify-vercel-body.cjs && node verify-canonical.cjs && node verify-customer-notices.cjs && node verify-security-markup.cjs",
     "check:smtp": "node check-smtp.cjs",
     "test:vercel-body": "node verify-vercel-body.cjs",
     "test:inventory": "node verify-inventory.cjs",
-    "test:notifications": "node verify-notifications.cjs"
+    "test:notifications": "node verify-notifications.cjs",
+    "test:security-markup": "node verify-security-markup.cjs"
   }
 }

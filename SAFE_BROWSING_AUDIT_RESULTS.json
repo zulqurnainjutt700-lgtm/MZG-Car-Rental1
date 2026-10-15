@@ -1,0 +1,639 @@
+{
+  "date": "2026-10-15T13:18:33.932Z",
+  "origin": "https://mzg-car-rental2.vercel.app",
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "redirect": null,
+      "title": "MZG Car Rental | Your next drive starts in Lahore",
+      "heading": "A better drive.A better way to rent.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "search",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/about.html",
+      "status": 200,
+      "redirect": null,
+      "title": "About us | MZG Car Rental Lahore",
+      "heading": "Lahore is our city.Your journey is our focus.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/contact.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Contact us | MZG Car Rental Lahore",
+      "heading": "Your plans.Let us talk about them.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "enquiry-form",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/fleet.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Our Fleet | 24 Car Rental Options in Lahore | MZG",
+      "heading": "Your plans.Your perfect ride.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "search",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/rental-plans.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Rental plans | MZG Car Rental Lahore",
+      "heading": "A rental that fitsthe way you move.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/rental-policy.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Rental Policy | Deposits, Insurance, Mileage & Cancellation | MZG",
+      "heading": "Clear terms.A confident journey.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/privacy-policy.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Privacy policy | MZG Car Rental Lahore",
+      "heading": "Privacy, explainedin plain language.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/terms-and-conditions.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Terms & conditions | MZG Car Rental Lahore",
+      "heading": "Know the details.Enjoy the drive.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/image-credits.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Image credits | MZG Car Rental Lahore",
+      "heading": "A little creditwhere it belongs.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "commons.wikimedia.org",
+        "creativecommons.org",
+        "fonts.google.com",
+        "github.com",
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/login.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Sign in | MZG Car Rental Lahore",
+      "heading": "Welcome back.Your next drive awaits.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "auth-form",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/signup.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Sign up | MZG Car Rental Lahore",
+      "heading": "Your next journey.A simpler start.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "auth-form",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/forgot-password.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Forgot password | MZG Car Rental Lahore",
+      "heading": "Let's get you back in.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "auth-form",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/reset-password.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Reset password | MZG Car Rental Lahore",
+      "heading": "A fresh password.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "auth-form",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/verify-email.html",
+      "status": 200,
+      "redirect": null,
+      "title": "Verify email | MZG Car Rental Lahore",
+      "heading": "Verify your email.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [],
+      "externalLinkHosts": [
+        "wa.me"
+      ],
+      "logos": [
+        {
+          "src": "/media/993a8893-2099-4a83-b50e-ce6a7a5c1b01.webp",
+          "alt": "MZG Car Rental"
+        },
+        {
+          "src": "/media/4477a2d8-8dce-40a5-9a1e-e41425fb8e12.webp",
+          "alt": "MZG Car Rental"
+        }
+      ],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/admin",
+      "status": 200,
+      "redirect": null,
+      "title": "MZG · Administrator sign in",
+      "heading": "Welcome back.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "admin-signin",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [],
+      "logos": [],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/admin.html",
+      "status": 200,
+      "redirect": null,
+      "title": "MZG · Administrator sign in",
+      "heading": "Welcome back.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "admin-signin",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [],
+      "logos": [],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    },
+    {
+      "path": "/admin/dashboard",
+      "status": 200,
+      "redirect": null,
+      "title": "MZG · Administrator sign in",
+      "heading": "Welcome back.",
+      "externalScripts": [],
+      "frames": [],
+      "forms": [
+        {
+          "id": "admin-signin",
+          "action": "(JavaScript handler)",
+          "method": "GET default"
+        }
+      ],
+      "externalLinkHosts": [],
+      "logos": [],
+      "findings": [],
+      "securityHeaders": {
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://upload.wikimedia.org https://images.unsplash.com; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'",
+        "hsts": "max-age=31536000",
+        "nosniff": "nosniff"
+      }
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/shared.js",
+      "status": 200,
+      "sha256": "30a479ebc802811ddaf310055c5b872879fd2e6d9fc36de0146b3dc95515cc62",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    },
+    {
+      "path": "/assets/account-auth.js",
+      "status": 200,
+      "sha256": "c7a0ee70b43aaa50ecfa702fc1a7f8cb595465c4262672e9ccab9d16afd219ad",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    },
+    {
+      "path": "/home.js",
+      "status": 200,
+      "sha256": "846dca3d710f735baa0f67d7266d776cd1cc0acd32766481e0b016602dea5018",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    },
+    {
+      "path": "/assets/notifications-ui.js",
+      "status": 200,
+      "sha256": "7c61d51f9bc22fb2dbdf66ebf2bb58f023211b60f22099c055ff58e825b8cf02",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "sha256": "dbd68e3cd403dda8a2c9fa2459cdad5d6054e497c9c97d8c7c65516f5973175f",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    },
+    {
+      "path": "/assets/auth-pages.js",
+      "status": 200,
+      "sha256": "f3e5669c76aa6267333002001c6f490eb2561f3fb6dab7ca560f0e59af030793",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    },
+    {
+      "path": "/assets/admin.js",
+      "status": 200,
+      "sha256": "6b31bae90f85cb838307fcb369d15573776aae55ca268139b9902df399836ab2",
+      "matchesProject": true,
+      "suspiciousTokens": []
+    }
+  ],
+  "sensitivePaths": [
+    {
+      "path": "/.env",
+      "status": 404
+    },
+    {
+      "path": "/.git/config",
+      "status": 404
+    },
+    {
+      "path": "/server.cjs",
+      "status": 404
+    },
+    {
+      "path": "/postgres-schema.sql",
+      "status": 404
+    },
+    {
+      "path": "/.private/auth.sqlite",
+      "status": 404
+    },
+    {
+      "path": "/api/admin/dashboard",
+      "status": 401
+    },
+    {
+      "path": "/api/admin/settings",
+      "status": 401
+    },
+    {
+      "path": "/api/bookings",
+      "status": 401
+    }
+  ],
+  "contextComparisons": [
+    {
+      "path": "/",
+      "sameBody": true,
+      "status": 200,
+      "redirect": null
+    },
+    {
+      "path": "/login.html",
+      "sameBody": true,
+      "status": 200,
+      "redirect": null
+    },
+    {
+      "path": "/admin",
+      "sameBody": true,
+      "status": 200,
+      "redirect": null
+    }
+  ],
+  "limits": [
+    "Targeted HTTP/source audit, not proof of absence of compromise or Google approval.",
+    "No passwords, sessions or private database records inspected."
+  ]
+}

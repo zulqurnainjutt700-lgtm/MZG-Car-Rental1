@@ -3,6 +3,10 @@ function applyPresentation($,s={}){
  // Keep ownership verification in server-rendered HTML, including saved CMS pages.
  $('meta[name="google-site-verification"]').remove();
  $('head').append('<meta name="google-site-verification" content="CNyAPvbUIWEx_Z4wFZmbXkkAK5fNVpx83t6AG-7xaso">');
+ // Native submission must never put passwords in URL/history if JavaScript is delayed.
+ $('form').filter((_,e)=>$(e).find('input[type="password"]').length).attr('method','post');
+ const accountForm=$('form#auth-form[data-mode="signin"]');
+ if(accountForm.length&&!$('[data-account-security-note]').length)accountForm.before('<p class="fine-print" data-account-security-note>Use your MZG account password here. This is not a Google or Gmail sign-in page.</p>');
  const p=s.presentation||{};
  $('body').attr('data-email-compose',p.emailComposeMode||'chooser');
  $('body').attr('data-business-whatsapp',s.whatsapp||'923025184681');
