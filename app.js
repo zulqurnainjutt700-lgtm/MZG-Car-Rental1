@@ -2,6 +2,7 @@ const fleet = await fetch('/fleet.json').then(r => { if (!r.ok) throw new Error(
 const policy = await fetch('/rental-policy.json').then(r => { if (!r.ok) throw new Error('Rental policy could not load'); return r.json(); });
 const money = value => 'PKR ' + Math.round(value).toLocaleString('en-PK');
 const params = new URLSearchParams(location.search);
+let availableIds=null,availabilityRequest=0;
 let category = params.get('category') || 'all';
 let group = params.get('group') || '';
 const groups = { compact:[8,9,10,11,12,13], premium:[14], luxury:[21,22], oversize:[15,16,17,18,19,20,23,24], mini:[1,6], economy:[2,3,4,5,7] };
@@ -15,28 +16,33 @@ const nextDay = value => { const date = new Date(value + 'T12:00:00'); date.setD
 const validDate = value => /^\d{4}-\d{2}-\d{2}$/.test(value || '') && Number.isFinite(new Date(value + 'T12:00:00').getTime());
 pickup.min = today;
 pickup.value = validDate(params.get('pickup')) && params.get('pickup') >= today ? params.get('pickup') : today;
-dropoff.min = nextDay(pickup.value);
-dropoff.value = validDate(params.get('return')) && params.get('return') > pickup.value ? params.get('return') : nextDay(pickup.value);
+dropoff.min = pickup.value;
+dropoff.value = validDate(params.get('return')) && params.get('return') >= pickup.value ? params.get('return') : nextDay(pickup.value);
 const locationSelect = document.querySelector('#location');
 if ([...locationSelect.options].some(o => o.value === params.get('location'))) locationSelect.value = params.get('location');
-pickup.addEventListener('change', () => { if (!validDate(pickup.value)) return; dropoff.min = nextDay(pickup.value); if (dropoff.value <= pickup.value) dropoff.value = dropoff.min; });
-const days = () => Math.round((new Date(dropoff.value+'T12:00:00') - new Date(pickup.value+'T12:00:00')) / 86400000);
+pickup.addEventListener('change', () => { if (!validDate(pickup.value)) return; dropoff.min = pickup.value; if (dropoff.value < pickup.value) dropoff.value = dropoff.min; });
+const days = () => Math.ceil((new Date(dropoff.value+'T'+(document.querySelector('#return-time')?.value||'10:00')+':00+05:00')-new Date(pickup.value+'T'+(document.querySelector('#pickup-time')?.value||'10:00')+':00+05:00'))/86400000);
 const grid = document.querySelector('#cars');
 const search = document.querySelector('#fleet-search');
 function render() {
   const query = search.value.trim().toLowerCase();
-  let list = fleet.filter(car => (group ? groups[group].includes(car.id) : (category === 'all' || car.category === category)) && `${car.make} ${car.name}`.toLowerCase().includes(query));
+  let list = fleet.filter(car => (availableIds===null?(car.displayPolicy!=='available-now'||car.availableNow):availableIds.has(car.id)) && (group ? groups[group].includes(car.id) : (category === 'all' || car.category === category)) && `${car.make} ${car.name}`.toLowerCase().includes(query));
   const sort = document.querySelector('#sort').value;
   if (sort !== 'featured') list.sort((a,b) => sort === 'low' ? a.rate-b.rate : b.rate-a.rate);
   document.querySelector('#results').textContent = `${list.length} car${list.length===1?'':'s'} to explore${group?' · '+group.charAt(0).toUpperCase()+group.slice(1):category==='all'?'':' · '+(category==='MPV'?'7-Seaters':category)}`;
   document.querySelectorAll('[data-category]').forEach(button => { const active = !group && button.dataset.category === category; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
-  grid.innerHTML = list.length ? list.map((car,index) => `<article class="car-card"><div class="car-photo"><img src="${car.image}" alt="${car.make} ${car.name} model illustration" width="1536" height="1024" loading="${index<3?'eager':'lazy'}" decoding="async"><span class="car-tag">${car.category==='MPV'?'7-Seater':car.category} · Model illustration</span></div><div class="car-body"><span class="make">${car.make}</span><h3>${car.make} ${car.name}</h3><p class="car-detail-text">${car.description}</p><div class="specs"><span>♙ ${car.seats} seats</span><span>◉ ${car.transmission}</span><span>⌖ Lahore</span></div><div class="car-price"><div><small>DAILY RENTAL RATE</small><b>${money(car.rate)} <span>/ day</span></b></div><button data-book="${car.id}" aria-label="View rental estimate for ${car.make} ${car.name}">View car ↗</button></div></div></article>`).join('') : '<div class="fleet-empty"><h3>No cars match that search.</h3><p>Try another model or explore all categories.</p><button class="primary" id="reset-filters">Show all cars ↗</button></div>';
+  grid.innerHTML = list.length ? list.map((car,index) => `<article class="car-card"><div class="car-photo"><img src="${car.image}" srcset="${car.imageSrcSet||''}" sizes="(max-width:650px) calc(100vw - 40px), (max-width:1000px) 45vw, 30vw" alt="${car.make} ${car.name} model illustration" width="1536" height="1024" loading="${index<3?'eager':'lazy'}" decoding="async"><span class="car-tag">${car.category==='MPV'?'7-Seater':car.category} · Model illustration</span></div><div class="car-body"><span class="make">${car.make}</span><h3>${car.make} ${car.name}</h3><p class="car-detail-text">${car.description}</p><p class="car-availability">${availableIds===null?'Select dates to check availability':'Available for selected dates'}</p><div class="specs"><span>♙ ${car.seats} seats</span><span>◉ ${car.transmission}</span><span>⌖ Lahore</span></div><div class="car-price"><div><small>DAILY RENTAL RATE</small><b>${money(car.rate)} <span>/ day</span></b></div><button data-book="${car.id}" aria-label="View rental estimate for ${car.make} ${car.name}">View car ↗</button></div></div></article>`).join('') : '<div class="fleet-empty"><h3>No cars match that search.</h3><p>Try another model or explore all categories.</p><button class="primary" id="reset-filters">Show all cars ↗</button></div>';
   document.querySelector('#reset-filters')?.addEventListener('click', () => { category='all'; group=''; search.value=''; render(); });
 }
 document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => { category=button.dataset.category; group=''; render(); }));
 document.querySelector('#sort').addEventListener('change', render);
 search.addEventListener('input', render);
-document.querySelector('#search').addEventListener('submit', event => { event.preventDefault(); const error=document.querySelector('.search-error'); if (!Number.isFinite(days()) || days()<1 || pickup.value<today) { error.textContent='Choose a valid pickup date and a later return date.'; return; } error.textContent=''; document.querySelector('#trip-summary').textContent=`${locationSelect.value} · ${days()} day${days()===1?'':'s'} · ${pickup.value} to ${dropoff.value}`; render(); document.querySelector('#fleet').scrollIntoView({behavior:'smooth'}); });
+async function refreshAvailability(){const error=document.querySelector('.search-error'),button=document.querySelector('#search button[type=submit]'),request=++availabilityRequest;const pickupTime=document.querySelector('#pickup-time')?.value||params.get('pickupTime')||'10:00',returnTime=document.querySelector('#return-time')?.value||params.get('returnTime')||'10:00';error.textContent='';if(!Number.isFinite(days())||days()<1||pickup.value<today){error.textContent='Choose valid pickup and return dates.';return false;}button.disabled=true;button.setAttribute('aria-busy','true');try{const q=new URLSearchParams({pickupAt:pickup.value+'T'+pickupTime,returnAt:dropoff.value+'T'+returnTime});const response=await fetch('/api/availability?'+q);const data=await response.json();if(!response.ok)throw Error(data.error||'Availability could not be checked.');if(request!==availabilityRequest)return false;availableIds=new Set(data.availableIds);document.querySelector('#trip-summary').textContent=locationSelect.value+' · '+pickup.value+' '+pickupTime+' to '+dropoff.value+' '+returnTime+' · Pakistan time';render();return true;}catch(e){if(request===availabilityRequest){error.textContent=e.message;availableIds=new Set();render();}return false;}finally{if(request===availabilityRequest){button.disabled=false;button.removeAttribute('aria-busy');}}}
+for(const id of ['pickup-time','return-time']){const input=document.querySelector('#'+id);if(input&&/^\d\d:\d\d$/.test(params.get(id==='pickup-time'?'pickupTime':'returnTime')||''))input.value=params.get(id==='pickup-time'?'pickupTime':'returnTime');}
+document.querySelector('#search').addEventListener('submit',async event=>{event.preventDefault();if(await refreshAvailability())document.querySelector('#fleet').scrollIntoView({behavior:'smooth'});});
+document.querySelector('#search').addEventListener('change',()=>{availableIds=null;availabilityRequest++;render();});
+if(params.has('pickup')&&params.has('return'))refreshAvailability();
+
 const modal = document.querySelector('#booking');
 document.querySelector('.close').addEventListener('click', () => modal.close());
 modal.addEventListener('click', event => { if (event.target !== modal) return; const r=modal.getBoundingClientRect(); if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) modal.close(); });

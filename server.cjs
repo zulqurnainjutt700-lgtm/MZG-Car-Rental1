@@ -22,7 +22,7 @@ function createServer(options={}){
     const session=auth.authorize(req);let file='admin-login.html';
     if(session?.user.role==='admin'){
      const access=auth.admin.access(session.user),section=adminPath.split('/')[2]||'dashboard';
-     if(!['dashboard','pages','fleet','bookings','customers','media','seo','settings','maintenance','security','backups'].includes(section)){res.writeHead(404);res.end('Admin page not found');return;}
+     if(!['notifications','availability','dashboard','pages','fleet','bookings','customers','media','seo','settings','maintenance','security','backups'].includes(section)){res.writeHead(404);res.end('Admin page not found');return;}
      if(!access.mfa_secret||!session.session.admin_verified){if(section==='security')file='admin-panel.html';else if(!['/admin','/admin.html'].includes(adminPath)){res.writeHead(303,{'Location':'/admin','Cache-Control':'no-store'});res.end();return;}}
      else{try{auth.admin.identity(req,section==='security'?null:section);}catch(e){res.writeHead(e.status||403,{'Content-Type':'text/plain','Cache-Control':'no-store'});res.end(e.message);return;}file='admin-panel.html';}
     }else if(session&&(adminPath.startsWith('/admin/')||adminPath==='/admin.html')){res.writeHead(403,{'Content-Type':'text/plain','Cache-Control':'no-store'});res.end('Administrator access required');return;}

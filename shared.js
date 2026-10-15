@@ -6,10 +6,10 @@ window.mzgRequestReady=(button,review)=>{
  banner.classList.remove('animate-ready');requestAnimationFrame(()=>banner.classList.add('animate-ready'));
 };
 document.addEventListener('input',event=>{const form=event.target.closest('form');if(!form)return;form.querySelectorAll('.request-ready').forEach(button=>{button.textContent=button.dataset.originalLabel;button.classList.remove('request-ready');});});
-const menu=document.querySelector('.menu');
-menu?.addEventListener('click',()=>{const open=document.querySelector('nav').classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
-document.querySelector('nav')?.addEventListener('click',event=>{if(event.target.closest('a')){document.querySelector('nav').classList.remove('open');menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Open navigation');}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelector('nav')?.classList.remove('open');menu?.setAttribute('aria-expanded','false')}});
+const menu=document.querySelector('.menu'),navigation=document.querySelector('header nav');
+function closeNavigation(){navigation?.classList.remove('open');document.body.classList.remove('nav-open');menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Open navigation');}
+if(menu&&navigation){navigation.id||='mzg-navigation';menu.setAttribute('aria-controls',navigation.id);menu.addEventListener('click',()=>{const open=navigation.classList.toggle('open');document.body.classList.toggle('nav-open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');if(open)navigation.querySelector('a,button')?.focus();});navigation.addEventListener('click',e=>{if(e.target.closest('a'))closeNavigation();});document.addEventListener('keydown',e=>{if(!navigation.classList.contains('open'))return;if(e.key==='Escape'){closeNavigation();menu.focus();}if(e.key==='Tab'){const items=[menu,...navigation.querySelectorAll('a[href],button,summary')].filter(el=>el.getClientRects().length);const first=items[0],last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});window.addEventListener('resize',()=>{if(innerWidth>760)closeNavigation();});}
+
 document.querySelector('#year')?.replaceChildren(document.createTextNode(new Date().getFullYear()));
 const enquiry=document.querySelector('#enquiry-form');
 if(enquiry){
@@ -29,3 +29,6 @@ if(enquiry){
  });
  document.querySelector('#edit-enquiry').addEventListener('click',()=>{enquiry.hidden=false;document.querySelector('#enquiry-review').hidden=true;const button=enquiry.querySelector('.request-ready');if(button){button.textContent=button.dataset.originalLabel;button.classList.remove('request-ready');}enquiry.elements.name.focus()});
 }
+
+// Keep the support shortcut clear of essential form and hero actions.
+const supportShortcut=document.querySelector('.whatsapp-float');if(supportShortcut){let pending=false;const placeSupport=()=>{pending=false;const r=supportShortcut.getBoundingClientRect();const overlaps=[...document.querySelectorAll('form input,form select,form textarea,form button,.hero-link,dialog[open]')].some(el=>{const b=el.getBoundingClientRect();return b.width&&b.height&&b.top<r.bottom+8&&b.bottom>r.top-8&&b.left<r.right+8&&b.right>r.left-8;});supportShortcut.classList.toggle('is-occluded',overlaps);};const queueSupport=()=>{if(!pending){pending=true;requestAnimationFrame(placeSupport);}};addEventListener('scroll',queueSupport,{passive:true});addEventListener('resize',queueSupport);queueSupport();}

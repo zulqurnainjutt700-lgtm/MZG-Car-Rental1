@@ -1,5 +1,7 @@
 const fs=require('node:fs'),path=require('node:path');
 function migrate(db,transaction,directory){
+ db.exec(`CREATE TABLE IF NOT EXISTS booking_operations(booking_id TEXT PRIMARY KEY REFERENCES bookings(id),started_at TEXT,returned_at TEXT);CREATE TABLE IF NOT EXISTS maintenance_blocks(id TEXT PRIMARY KEY,car_id INTEGER NOT NULL REFERENCES vehicles(id),starts_at TEXT NOT NULL,ends_at TEXT NOT NULL,reason TEXT NOT NULL,actor_id TEXT NOT NULL,created_at TEXT NOT NULL,cancelled_at TEXT);CREATE INDEX IF NOT EXISTS maintenance_car_dates ON maintenance_blocks(car_id,starts_at,ends_at);`);
+ db.exec("CREATE TABLE IF NOT EXISTS email_jobs(id TEXT PRIMARY KEY,dedupe TEXT NOT NULL UNIQUE,recipient TEXT NOT NULL,subject TEXT NOT NULL,body TEXT NOT NULL,html TEXT NOT NULL,kind TEXT NOT NULL,booking_id TEXT,status TEXT NOT NULL,attempts INTEGER NOT NULL DEFAULT 0,available_at INTEGER NOT NULL,leased_until INTEGER,created_at TEXT NOT NULL,sent_at TEXT,last_error TEXT);CREATE INDEX IF NOT EXISTS email_jobs_due ON email_jobs(status,available_at);");
  const columns=t=>db.prepare('PRAGMA table_info('+t+')').all().map(c=>c.name);
  if(!columns('users').includes('suspended'))db.exec('ALTER TABLE users ADD COLUMN suspended INTEGER NOT NULL DEFAULT 0');
  if(!columns('sessions').includes('admin_verified'))db.exec('ALTER TABLE sessions ADD COLUMN admin_verified INTEGER NOT NULL DEFAULT 0');
@@ -22,7 +24,7 @@ function migrate(db,transaction,directory){
  CREATE TABLE IF NOT EXISTS admin_invitations(token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),actor_id TEXT NOT NULL REFERENCES users(id),role TEXT NOT NULL,permissions TEXT NOT NULL,expires INTEGER NOT NULL);
  CREATE INDEX IF NOT EXISTS audit_date ON admin_audit(created_at);
  CREATE UNIQUE INDEX IF NOT EXISTS vehicles_registration ON vehicles(upper(replace(replace(coalesce(json_extract(data,'$.registration'),''),' ',''),'-',''))) WHERE json_extract(data,'$.registration') IS NOT NULL AND json_extract(data,'$.registration')<>'';
- PRAGMA user_version=3;`);
+ PRAGMA user_version=4;`);
  const fleet=JSON.parse(fs.readFileSync(path.join(__dirname,'fleet.json'),'utf8'));
  if(!db.prepare("SELECT 1 FROM metadata WHERE key='fleet_seeded'").get())transaction(()=>{for(const c of fleet)db.prepare('INSERT OR IGNORE INTO vehicles VALUES(?,?,?,?,?)').run(c.id,'MZG-'+String(c.id).padStart(3,'0'),JSON.stringify({...c,year:null,fuel:'Petrol',features:[],images:[c.image],featured:false,weeklyRate:c.rate*7,monthlyRate:c.rate*30}), 'available',new Date().toISOString());db.prepare("INSERT INTO metadata VALUES('fleet_seeded',?)").run(new Date().toISOString());});
 }
