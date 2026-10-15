@@ -11,7 +11,7 @@ function applyPresentation($,s={}){
  $('body').attr('data-email-compose',p.emailComposeMode||'chooser');
  $('body').attr('data-business-whatsapp',s.whatsapp||'923025184681');
  if(s.name)$('header .logo').attr('aria-label',s.name+' home');
- if(s.name)$('.logo').each((_,e)=>{const n=$(e);if(!n.find('img').length)n.contents().filter((_,x)=>x.type==='text').first().replaceWith(esc(s.name));});
+ if(s.name)$('.logo').each((_,e)=>{const n=$(e);if(!n.find('img').length)n.contents().filter((_,x)=>x.type==='text').first().replaceWith(esc(s.name==='MZG Car Rental'?'MZG':s.name));});
  for(const [selector,key]of [['header .logo','headerLogo'],['footer .logo','footerLogo']]){const logo=s[key]??s.logo;if(logo)$(selector).html('<img src="'+esc(logo)+'" alt="'+esc(s.name||'MZG Car Rental')+'" style="max-width:160px;max-height:56px;width:auto;object-fit:contain">');}
  for(const [key,prefix]of [['email','mailto:'],['phone','tel:'],['whatsapp','https://wa.me/']])if(s[key])$('a[href^="'+prefix+'"]').each((_,e)=>{$(e).attr('href',prefix+s[key]);if(key!=='whatsapp')$(e).text(s[key]);});
  if(p.supportEnabled===false)$('.whatsapp-float').remove();else $('.whatsapp-float').attr('aria-label',p.supportLabel||'Chat on WhatsApp');

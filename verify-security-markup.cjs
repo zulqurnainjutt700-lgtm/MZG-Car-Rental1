@@ -12,4 +12,7 @@ const $=load('<html><head></head><body><form id="old"><input type="password" nam
 const {applyPresentation}=require('./site-presentation.cjs');applyPresentation($);applyPresentation($);
 assert.equal($('#old').attr('method'),'post');
 assert.equal($('meta[name="google-site-verification"]').length,1);
+const brand=load('<html><head></head><body><header><a class="logo">MZG<span>CAR RENTAL</span></a></header></body></html>');
+applyPresentation(brand,{name:'MZG Car Rental'});
+assert.equal(brand('.logo').text(),'MZGCAR RENTAL');
 console.log('PASS '+count+' password forms use same-origin POST; saved HTML protected; verification tag preserved');
