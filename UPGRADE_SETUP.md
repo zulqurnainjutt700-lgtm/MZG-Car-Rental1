@@ -34,8 +34,8 @@ Gmail configuration in private `.env` locally and Vercel Production settings:
 
 ```
 SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_SECURE=true
+SMTP_PORT=587
+SMTP_SECURE=false
 SMTP_USER=YOUR_GMAIL_ADDRESS
 SMTP_FROM=YOUR_GMAIL_ADDRESS
 SMTP_PASS=YOUR_GOOGLE_APP_PASSWORD
@@ -46,6 +46,8 @@ password. Do not commit `.env` or paste passwords into chat. Restart the local
 server or redeploy Vercel after changing environment variables. `npm run check:smtp`
 checks SMTP authentication only. The owner can send a real test from
 `/admin/notifications`; confirm actual inbox receipt before calling email operational.
+Port 587 requires STARTTLS in the backend; `SMTP_SECURE=false` does not permit
+plaintext authentication. Certificate verification remains enabled.
 
 Alternatively set `RESEND_API_KEY` and `EMAIL_FROM` for a verified sender; Resend
 takes precedence. With a custom sending domain, copy the provider's exact SPF/DKIM

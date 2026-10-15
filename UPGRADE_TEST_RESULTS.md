@@ -1,5 +1,9 @@
 # Upgrade verification — 15 October 2026
 
+Later email activation supersedes the initial missing-SMTP finding below:
+see `EMAIL_ACTIVATION.md` for successful SMTP authentication, owner-confirmed live
+reset delivery and owner-confirmed isolated booking-notification delivery.
+
 ## Automated checks performed
 
 `npm test` passed: site assets/links, owner-supplied hero, customer authentication,
