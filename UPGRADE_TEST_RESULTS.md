@@ -65,8 +65,12 @@ These are file-size measurements, not Lighthouse scores or field Core Web Vitals
 
 SMTP authentication and real email delivery are not operational: the local
 `SMTP_PASS` value is empty. Cron secret saved in Vercel Production with owner
-approval; applying it requires a new deployment. Daily cron execution has not been
-observed. Native Android/iOS/Safari, exact every-width matrix, archival camera-original
+approval. Production deployment `c0f1cc2` reported Ready. Live checks returned 200
+for the homepage (new responsive markup and optimized hero), admin sign-in,
+availability API and responsive stylesheet; unauthenticated admin API returned 401.
+An authenticated scheduler request returned 200 with `configured:false`, zero sent
+and zero failed. Automatic daily cron execution has not yet been observed.
+Native Android/iOS/Safari, exact every-width matrix, archival camera-original
 media retention and field performance are not verified/implemented. Image framing
 uses focal-point controls rather than a destructive image editor. Google's prior
 Safe Browsing flag still needs the owner's Search Console security review.
