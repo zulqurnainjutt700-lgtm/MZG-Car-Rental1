@@ -43,7 +43,7 @@ function createServer(options={}){
    const html=auth.admin.render(requested);if(html){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-cache'});res.end(html);return;}
    const isAsset=requested.startsWith('assets/')&&file.startsWith(assetRoot);
    if((!publicFiles.has(requested)&&!isAsset)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404,{'Content-Type':'text/html; charset=utf-8'});res.end('<h1>Page not found</h1><a href="/">Back to MZG Car Rental</a>');return;}
-   const ext=path.extname(file);res.writeHead(200,{'Content-Type':(types[ext]||'application/octet-stream')+(['.html','.css','.js','.json','.md'].includes(ext)?'; charset=utf-8':''),'Cache-Control':privatePages.includes(requested)?'no-store':'no-cache'});
+   const ext=path.extname(file);if(ext==='.html'){const $=require('cheerio').load(fs.readFileSync(file,'utf8'));require('./interface-copy.cjs').apply($,requested,auth.admin.interfaceCopy(requested));require('./site-presentation.cjs').applyPresentation($,auth.admin.settings());res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});res.end($.html());return;}res.writeHead(200,{'Content-Type':(types[ext]||'application/octet-stream')+(['.html','.css','.js','.json','.md'].includes(ext)?'; charset=utf-8':''),'Cache-Control':privatePages.includes(requested)?'no-store':'no-cache'});
    if(req.method==='HEAD'){res.end();return;}const stream=fs.createReadStream(file);stream.on('error',()=>res.destroy());stream.pipe(res);
   }catch(e){if(!res.headersSent)res.writeHead(e.status||500,{'Content-Type':'text/plain','Cache-Control':'no-store'});res.end(e.status?e.message:'The request could not be completed.');}
  });

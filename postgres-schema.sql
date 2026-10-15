@@ -57,3 +57,9 @@ CREATE TABLE IF NOT EXISTS mzg_private.email_jobs(id TEXT PRIMARY KEY,dedupe TEX
 ALTER TABLE mzg_private.email_jobs ENABLE ROW LEVEL SECURITY;
 INSERT INTO mzg_private.metadata(key,value) VALUES('schema_version','4') ON CONFLICT(key) DO UPDATE SET value=excluded.value;
 COMMIT;
+
+CREATE TABLE IF NOT EXISTS mzg_private.notice_broadcasts(id TEXT PRIMARY KEY,actor_id TEXT NOT NULL,title TEXT NOT NULL,body TEXT NOT NULL,url TEXT NOT NULL,website_count INTEGER NOT NULL,email_count INTEGER NOT NULL,created_at TEXT NOT NULL);CREATE TABLE IF NOT EXISTS mzg_private.customer_notices(id TEXT PRIMARY KEY,broadcast_id TEXT NOT NULL REFERENCES mzg_private.notice_broadcasts(id),user_id TEXT NOT NULL REFERENCES mzg_private.users(id),title TEXT NOT NULL,body TEXT NOT NULL,url TEXT NOT NULL,created_at TEXT NOT NULL,read_at TEXT);CREATE INDEX IF NOT EXISTS notices_user_date ON mzg_private.customer_notices(user_id,created_at);CREATE TABLE IF NOT EXISTS mzg_private.notice_preferences(user_id TEXT PRIMARY KEY REFERENCES mzg_private.users(id),email_updates INTEGER NOT NULL DEFAULT 1);
+ALTER TABLE mzg_private.notice_broadcasts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE mzg_private.customer_notices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE mzg_private.notice_preferences ENABLE ROW LEVEL SECURITY;
+INSERT INTO mzg_private.metadata(key,value) VALUES('schema_version','5') ON CONFLICT(key) DO UPDATE SET value=excluded.value;

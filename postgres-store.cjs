@@ -3,7 +3,7 @@
 const {Worker,MessageChannel,receiveMessageOnPort}=require('node:worker_threads');
 const path=require('node:path'),fs=require('node:fs');
 require('pg'); // Include the driver's dependencies in serverless file tracing.
-const tables=['users','sessions','tokens','bookings','booking_events','limits','metadata','admin_access','admin_audit','vehicles','cms_pages','cms_revisions','site_settings','media','booking_internal','customer_notes','payments','backups','admin_invitations','booking_operations','maintenance_blocks','email_jobs'];
+const tables=['users','sessions','tokens','bookings','booking_events','limits','metadata','admin_access','admin_audit','vehicles','cms_pages','cms_revisions','site_settings','media','booking_internal','customer_notes','payments','backups','admin_invitations','booking_operations','maintenance_blocks','email_jobs','notice_broadcasts','customer_notices','notice_preferences'];
 function translate(sql){
  let n=0;
  sql=sql.replace(/date\(created_at,'\+5 hours'\)/g,"to_char((created_at::timestamptz AT TIME ZONE 'Asia/Karachi'),'YYYY-MM-DD')");

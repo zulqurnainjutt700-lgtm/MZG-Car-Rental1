@@ -9,3 +9,5 @@
 .btn:not(.secondary):not(.danger){color:#17262b;font-weight:700}.admin-table .btn{min-height:38px}.admin-login-card .btn{min-height:48px}.admin-layout input,.admin-layout select{min-height:44px}
 
 .admin-layout aside{height:100dvh;overflow-y:auto;overscroll-behavior:contain}.overdue-text{color:#a3342b}@media(max-width:760px){.admin-table .btn{min-height:44px}.admin-top .admin-account div{max-width:calc(100vw - 32px)}}
+
+.presentation-settings{padding:24px 0;margin-bottom:28px;border-bottom:1px solid #e1e6eb}.recipient-grid{max-height:260px;overflow:auto;border:1px solid #e1e6eb;border-radius:10px;padding:12px;margin:16px 0}.recipient-grid label{display:block;padding:10px;margin:0}.recipient-grid label[hidden]{display:none}.recipient-grid small{display:block;margin-left:25px;color:#64748b}.announcement-preview{white-space:pre-wrap;overflow-wrap:anywhere}

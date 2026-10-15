@@ -33,21 +33,25 @@ function createAuth(options={}){
  const serialize=b=>{const terms=JSON.parse(b.policy);const upcoming=new Date(b.pickup_at).getTime()>Date.now();const canCancel=b.status==='Pending'||(b.status==='Confirmed'&&upcoming);const late=new Date(b.pickup_at).getTime()-Date.now()<terms.cancellationNoticeHours*3600000;return {overdue:b.status==='Active'&&new Date(b.return_at).getTime()<Date.now(),id:b.id,reference:b.reference,carId:b.car_id,carName:b.car_name,carImage:b.car_image,pickupAt:b.pickup_at,returnAt:b.return_at,location:b.location,phone:b.phone,requests:b.requests,days:b.days,dailyRate:b.daily_rate,estimate:b.estimate,quotedPrice:b.quoted_price,prepaidAmount:b.prepaid_amount,status:b.status,ownerNote:b.owner_note,cancellationFee:b.cancellation_fee,createdAt:b.created_at,updatedAt:b.updated_at,policy:terms,canCancel,cancellationEstimate:b.status==='Confirmed'&&late?Math.min(b.daily_rate,b.prepaid_amount):0};};
  function owned(req,id,admin=false){const c=admin?requireAdmin(req):requireUser(req);const b=admin?get('SELECT * FROM bookings WHERE id=?',id):get('SELECT * FROM bookings WHERE id=? AND user_id=?',id,c.user.id);if(!b)fail(404,'Rental request not found.');return {c,b};}
  const notifications=require('./notifications.cjs').createNotifications({db,transaction,mailer,origin});
+ const notices=require('./customer-notices.cjs').createNotices({db,transaction,notifications,fail,origin});
  const event=(id,user,status,note)=>{run('INSERT INTO booking_events(booking_id,actor_id,status,note,created_at) VALUES(?,?,?,?,?)',id,user,status,note,stamp());notifications.booking(id,status);};
  function parseDate(value,field){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value))fail(400,'Choose valid pickup and return dates and times.',{[field]:'Date and time are required.'});const [day,time]=value.split('T');const check=new Date(day+'T00:00:00Z');if(!Number.isFinite(check.getTime())||check.toISOString().slice(0,10)!==day||time>'23:59'||Number(time.slice(3))>59)fail(400,'Choose a valid date and time.',{[field]:'This date or time is invalid.'});return new Date(value+':00+05:00').toISOString();}
- const adminService=require('./admin-service.cjs').createAdmin({db,transaction,directory,current,issue,readBody,limit,reply,fail,passwordMatches,publicUser,serialize,event,notifications,origin,secureCookies:options.secureCookies,mailer,ip:req=>req.mzgClientIp||req.socket.remoteAddress||'local'});
+ const adminService=require('./admin-service.cjs').createAdmin({db,transaction,directory,current,issue,readBody,limit,reply,fail,passwordMatches,publicUser,serialize,event,notifications,notices,origin,secureCookies:options.secureCookies,mailer,ip:req=>req.mzgClientIp||req.socket.remoteAddress||'local'});
  async function handler(req,res,url){
   if(!url.pathname.startsWith('/api/'))return false;
   try{
    const route=url.pathname,method=req.method,ip=req.mzgClientIp||req.socket.remoteAddress||'local';limit('api:'+ip,300,60000);
    if(method==='GET'&&route==='/api/jobs/email'){const secret=process.env.CRON_SECRET;if(!secret||secret.length<32)fail(503,'Email scheduler is not configured.');const expected=Buffer.from('Bearer '+secret),provided=Buffer.from(String(req.headers.authorization||''));if(expected.length!==provided.length||!crypto.timingSafeEqual(expected,provided))fail(401,'Scheduler authorization required.');notifications.reminders();reply(res,200,await notifications.safeFlush(2));return true;}
    if(method==='GET'&&route==='/api/availability'){reply(res,200,adminService.inventory.publicSearch(url.searchParams.get('pickupAt'),url.searchParams.get('returnAt')));return true;}
+   if(route==='/api/notifications'&&method==='GET'){const c=requireUser(req);reply(res,200,notices.list(c.user.id));return true;}
    if(method==='GET'&&route==='/api/me'){const c=current(req);reply(res,200,{user:c?publicUser(c.user):null,csrfToken:c?.session.csrf||null,emailDeliveryConfigured:mailer.configured});return true;}
    if(!['GET','POST','PATCH','DELETE'].includes(method))fail(405,'Method not allowed.');
    if(method!=='GET'){
     if(req.headers.origin!==origin)fail(403,'This request must come from the MZG website.');
     const c=current(req);if(c&&!['/api/signup','/api/signin','/api/admin/signin','/api/forgot-password','/api/reset-password','/api/verify-email'].includes(route)&&req.headers['x-csrf-token']!==c.session.csrf)fail(403,'Your security token expired. Refresh the page and try again.');
    }
+   if(route==='/api/notifications/read'&&method==='POST'){const c=requireUser(req);notices.read(c.user.id,await readBody(req));reply(res,200,notices.list(c.user.id));return true;}
+   if(route==='/api/notification-preferences'&&['GET','PATCH'].includes(method)){const c=requireUser(req);const data=method==='PATCH'?await readBody(req):{};reply(res,200,notices.preferences(c.user.id,method==='PATCH'?data.emailUpdates:undefined));return true;}
    if(await adminService.handle(req,res,url))return true;
    if(method==='POST'&&route==='/api/signout'){const c=current(req);if(c)run('DELETE FROM sessions WHERE token_hash=?',c.key);cookie(res,'',0);reply(res,200,{ok:true});return true;}
    if(method==='POST'&&['/api/signup','/api/signin','/api/forgot-password'].includes(route)){

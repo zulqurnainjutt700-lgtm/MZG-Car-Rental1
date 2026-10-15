@@ -17,6 +17,23 @@ const {createServer}=require('./server.cjs'),{totp,base32}=require('./admin-mfa.
   r=await request('/api/admin/mfa/confirm','POST',{code:enrollmentCode},owner);assert.equal(r.res.status,200);update(owner,r);assert.equal((await request('/api/admin/dashboard','GET',undefined,owner)).res.status,200);assert.equal((await request('/api/admin/settings','PATCH',{settings:{}},{...owner,csrf:'bad'})).res.status,403);
   let metrics=(await request('/api/admin/dashboard','GET',undefined,owner)).result.counts;assert.equal(metrics.cars,24);assert.equal(metrics.revenue,0);assert.equal(metrics.pending,0);const firstAnalytics=(await request('/api/admin/dashboard','GET',undefined,owner)).result.analytics;assert.equal(firstAnalytics.days.length,14);assert.equal(firstAnalytics.timezone,'Asia/Karachi');assert.ok(firstAnalytics.days.every(d=>d.requests===0&&d.receipts===0));assert.equal(metrics.customers,1);
   console.log('PASS administrator routes, owner provisioning, invalid/customer credentials, MFA enrollment, RFC vector, authorization and live empty metrics');
+  const announcement={title:'Customer update',body:'A safe account notice <script>plain text</script>',url:'/fleet.html',website:true,email:true,allCustomers:true,confirm:true,requestId:crypto.randomUUID()};
+  assert.equal((await request('/api/admin/notifications/send','POST',announcement,customer)).res.status,403);
+  assert.equal((await request('/api/admin/notifications/send','POST',{...announcement,confirm:false},owner)).res.status,400);
+  r=await request('/api/admin/notifications/send','POST',announcement,owner);assert.equal(r.res.status,201,JSON.stringify(r.result));assert.equal(r.result.website,1);assert.equal(r.result.email,0);
+  assert.equal((await request('/api/admin/notifications/send','POST',announcement,owner)).res.status,201);
+  const inbox=(await request('/api/notifications','GET',undefined,customer)).result;assert.equal(inbox.items.length,1);assert.equal(inbox.unread,1);
+  assert.equal((await request('/api/notifications','GET')).res.status,401);
+  assert.equal((await request('/api/notifications/read','POST',{id:inbox.items[0].id},owner)).res.status,404);
+  assert.equal((await request('/api/notifications/read','POST',{id:inbox.items[0].id},customer)).result.unread,0);
+  assert.equal((await request('/api/notification-preferences','PATCH',{emailUpdates:false},customer)).result.emailUpdates,false);
+  console.log('PASS owner-only announcement review/send, idempotency, unverified-email exclusion, private inbox ownership, unread state and communication preferences');
+  r=await request('/api/admin/settings/interface?file=login.html','GET',undefined,owner);assert.equal(r.res.status,200);const copyKey=r.result.fields.find(f=>f.text==='Welcome back.').key;
+  assert.equal((await request('/api/admin/settings/interface','PATCH',{file:'login.html',values:{[copyKey]:'Secure customer sign in'}},customer)).res.status,403);
+  assert.equal((await request('/api/admin/settings/interface','PATCH',{file:'login.html',values:{[copyKey]:'Secure customer sign in'}},owner)).res.status,200);
+  assert.ok((await request('/login.html')).raw.includes('Secure customer sign in'));
+
+
   r=await request('/api/admin/pages/index','GET',undefined,owner);const original=structuredClone(r.result.page),draft=structuredClone(original);const h=draft.content.blocks[0].fields.find(f=>f.tag==='h1');h.text='A real CMS test heading';draft.content.blocks.push({id:crypto.randomUUID(),type:'cta',label:'Test CTA',hidden:false,background:'light',props:{title:'Safe <script>alert(1)</script>',text:'Published content test',button:'Browse cars',url:'/fleet.html',image:'',alt:'',items:[],carIds:[],alignment:'left'}});
   r=await request('/api/admin/pages/index','PATCH',{revision:draft.revision,content:draft.content},owner);assert.equal(r.res.status,200,JSON.stringify(r.result));const revision=r.result.page.revision;assert.ok(!(await request('/')).raw.includes('A real CMS test heading'));r=await request('/cms-preview/index','GET',undefined,owner);assert.equal(r.res.status,200);assert.ok(r.raw.includes('A real CMS test heading'));assert.equal(r.res.headers.get('x-frame-options'),'SAMEORIGIN');
   assert.equal((await request('/api/admin/pages/index','PATCH',{revision:original.revision,content:draft.content},owner)).res.status,409);r=await request('/api/admin/pages/index/publish','POST',{revision,confirm:true},owner);assert.equal(r.res.status,200);assert.ok((await request('/')).raw.includes('A real CMS test heading'));assert.ok((await request('/')).raw.includes('&lt;script&gt;'));assert.ok(!(await request('/')).raw.includes('<script>alert(1)</script>'));
